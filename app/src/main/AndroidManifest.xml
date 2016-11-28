@@ -27,7 +27,8 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".confirmCodeActivity"></activity>
+        <activity android:name=".confirmCodeActivity" />
+        <activity android:name=".RoomActivity"></activity>
     </application>
 
 </manifest>
