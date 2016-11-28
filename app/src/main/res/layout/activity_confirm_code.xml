@@ -16,8 +16,8 @@
         android:layout_marginRight="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginBottom="10dp"
-        android:id="@+id/txt_phone"
-        android:text="@string/phone_label_string"
+        android:id="@+id/txt_confirm"
+        android:text="@string/confirm_label_string"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/textsize_24"
         android:textAlignment="center"
@@ -25,13 +25,13 @@
 
     <EditText
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginRight="50dp"
         android:layout_marginLeft="50dp"
-        android:id="@+id/edit_phone"
+        android:id="@+id/edit_confirm"
         android:background="@drawable/rounded_textfield"
         android:textSize="@dimen/textsize_18"
         android:inputType="text"
-        android:layout_height="wrap_content"
         android:layout_weight="0.04" />
 
     <TextView
@@ -40,11 +40,11 @@
         android:layout_marginRight="50dp"
         android:layout_marginLeft="50dp"
         android:height="35dp"
-        android:id="@+id/btn_submit"
-        android:text="@string/submit"
+        android:id="@+id/btn_confirm"
+        android:text="@string/confirm"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/textsize_18"
-        android:gravity="center_horizontal|center"
+        android:gravity="center_vertical|center_horizontal"
         android:background="@drawable/rounded_button"
         android:layout_marginTop="5dp"
         android:textStyle="normal|bold"

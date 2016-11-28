@@ -2,5 +2,8 @@
     <string name="app_name">webRTC-Android</string>
     <string name="phonenumber">phoneNumber</string>
     <string name="submit">Submit</string>
-    <string name="textview">Please Enter your Mobile Number to register</string>
+    <string name="textview">Null String</string>
+    <string name="phone_label_string">Please Enter your Mobile Number to register</string>
+    <string name="confirm">Confirm</string>
+    <string name="confirm_label_string">You should receive a confirmation code \n Please enter the code and click to confirm</string>
 </resources>
