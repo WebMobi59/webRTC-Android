@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/relative_parent"
+    android:orientation="vertical"
+    android:background="@android:color/holo_orange_dark"
+    android:weightSum="1">
+
+    <VideoView
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:id="@+id/call_screen"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="wrap_content">
+
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/drop"
+            android:id="@+id/drop_call_btn"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:text="OPEN"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/open_call_btn"
+            android:layout_weight="0.05"
+            android:textSize="24sp"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="normal|bold"
+            android:gravity="center"
+            android:background="@drawable/circle_button"
+            android:layout_margin="10dp" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/mute"
+            android:id="@+id/mute_call_btn"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:layout_gravity="center" />
+    </LinearLayout>
+
+</LinearLayout>

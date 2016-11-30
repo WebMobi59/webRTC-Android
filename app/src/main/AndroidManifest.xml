@@ -28,7 +28,8 @@
         </service>
 
         <activity android:name=".confirmCodeActivity" />
-        <activity android:name=".RoomActivity"></activity>
+        <activity android:name=".RoomActivity" />
+        <activity android:name=".ConnectCallActivity"></activity>
     </application>
 
 </manifest>

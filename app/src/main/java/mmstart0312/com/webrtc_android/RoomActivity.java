@@ -3,11 +3,15 @@ package mmstart0312.com.webrtc_android;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 public class RoomActivity extends AppCompatActivity {
 
@@ -23,26 +27,27 @@ public class RoomActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                final View innerView = getLayoutInflater().inflate(R.layout.userinfo_layout, null);
+//                final View innerView = getLayoutInflater().inflate(R.layout.userinfo_layout, null);
 
                 Dialog mDialog = new Dialog(context);
                 mDialog.setTitle("Title");
-                mDialog.setContentView(innerView);
+                mDialog.setContentView(R.layout.userinfo_layout);
                 mDialog.setCancelable(true);
-
-                WindowManager.LayoutParams params = getWindow().getAttributes();
-                params.x = -20;
-                params.height = 100;
-                params.width = 550;
-                params.y = -10;
-
-                mDialog.getWindow().setAttributes(params);
-//                WindowManager.LayoutParams params = mDialog.getWindow().getAttributes();
-//                params.width = WindowManager.LayoutParams.MATCH_PARENT;
-//                params.height = WindowManager.LayoutParams.MATCH_PARENT;
-//                mDialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
-
                 mDialog.show();
+                Window window = mDialog.getWindow();
+//                window.setLayout(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+                window.setLayout(LinearLayoutCompat.LayoutParams.MATCH_PARENT, LinearLayoutCompat.LayoutParams.WRAP_CONTENT);
+            }
+        });
+
+        TextView roombtn = (TextView) findViewById(R.id.room_info_label);
+        roombtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                Intent intent = new Intent(getApplicationContext(),ConnectCallActivity.class);
+                startActivity(intent);
             }
         });
     }
