@@ -5,7 +5,7 @@ android {
     buildToolsVersion "25.0.1"
     defaultConfig {
         applicationId "mmstart0312.com.webrtc_android"
-        minSdkVersion 17
+        minSdkVersion 19
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -28,7 +28,7 @@ dependencies {
     compile 'com.google.firebase:firebase-messaging:10.0.0'
     compile 'com.google.firebase:firebase-core:9.2.0'                        // this line must be included to integrate with Firebase
     compile 'com.google.firebase:firebase-messaging:9.2.0'
-
+    compile 'com.squareup.okhttp3:okhttp:3.4.2'
     testCompile 'junit:junit:4.12'
 }
 

@@ -32,7 +32,8 @@
         android:textSize="@dimen/textsize_18"
         android:inputType="text"
         android:layout_height="wrap_content"
-        android:layout_weight="0.04" />
+        android:layout_weight="0.04"
+        android:textColor="?attr/colorPrimaryDark" />
 
     <TextView
         android:layout_width="match_parent"
