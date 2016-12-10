@@ -1,34 +1,29 @@
 package mmstart0312.com.webrtc_android;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
-
-import java.util.HashMap;
-import java.util.Map;
+import android.util.Log;
 
 public class MainActivity extends AppCompatActivity {
+
+    private SharedPreferences devicetoken;
+    private String deviceToken_string;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        TextView button = (TextView) findViewById(R.id.btn_submit);
-        final EditText phone_number = (EditText) findViewById(R.id.edit_phone);
-        final OkHttpClientManager clientManager = new OkHttpClientManager();
-        final Map<String,String> params =  new HashMap<String,String>();
-        button.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
+        devicetoken = getApplication().getSharedPreferences("AppInfo", MODE_PRIVATE);
+        deviceToken_string = devicetoken.getString("deviceToken","");
 
-                Intent intent = new Intent(getApplicationContext(),confirmCodeActivity.class);
-                startActivity(intent);
-            }
-        });
+        if (deviceToken_string != "") {
+            Intent intent = new Intent(getApplicationContext(), RoomActivity.class);
+            startActivity(intent);
+        } else{
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+        }
     }
 }

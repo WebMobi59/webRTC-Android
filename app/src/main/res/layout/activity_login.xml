@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_confirm_code"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="mmstart0312.com.webrtc_android.confirmCodeActivity"
+    android:background="@android:color/holo_orange_dark"
+    android:gravity="center_vertical|center_horizontal"
+    android:weightSum="1">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/txt_phone"
+        android:text="@string/phone_label_string"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/textsize_24"
+        android:textAlignment="center"
+        android:textStyle="normal|bold" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp"
+        android:id="@+id/edit_phone"
+        android:background="@drawable/rounded_textfield"
+        android:textSize="@dimen/textsize_18"
+        android:inputType="text"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.04"
+        android:textColor="?attr/colorPrimaryDark" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp"
+        android:height="35dp"
+        android:id="@+id/btn_submit"
+        android:text="@string/submit"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/textsize_18"
+        android:gravity="center_horizontal|center"
+        android:background="@drawable/rounded_button"
+        android:layout_marginTop="5dp"
+        android:textStyle="normal|bold"
+        android:textAlignment="center" />
+
+
+</LinearLayout>

@@ -27,7 +27,6 @@ public class RoomActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-//                final View innerView = getLayoutInflater().inflate(R.layout.userinfo_layout, null);
 
                 Dialog mDialog = new Dialog(context);
                 mDialog.setTitle("Title");
@@ -35,7 +34,6 @@ public class RoomActivity extends AppCompatActivity {
                 mDialog.setCancelable(true);
                 mDialog.show();
                 Window window = mDialog.getWindow();
-//                window.setLayout(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
                 window.setLayout(LinearLayoutCompat.LayoutParams.MATCH_PARENT, LinearLayoutCompat.LayoutParams.WRAP_CONTENT);
             }
         });

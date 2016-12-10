@@ -1,9 +1,19 @@
 <resources>
-    <string name="app_name">webRTC-Android</string>
+    <string name="app_name">EntryView</string>
     <string name="phonenumber">phoneNumber</string>
     <string name="submit">Submit</string>
-    <string name="textview">Null String</string>
+    <string name="cancel">Cancel</string>
+    <string name="phone">Phone number : </string>
+    <string name="primary_phone">Primary Number</string>
+    <string name="first_name">First Name : </string>
+    <string name="last_name">Last Name : </string>
+    <string name="street">Street : </string>
+    <string name="apt">Apt3/Suite# : </string>
+    <string name="city">City : </string>
+    <string name="state">State : </string>
+    <string name="zip">Zip Code : </string>
     <string name="phone_label_string">Please Enter your Mobile Number to register</string>
     <string name="confirm">Confirm</string>
     <string name="confirm_label_string">You should receive a confirmation code \n Please enter the code and click to confirm</string>
+    <string name="addUserInfo_label_string">We did not find any\n apartment assoicated\n with this phone number.\n Please enter your details,\n we will notify you once we can\n associate your number\n with the provided address</string>
 </resources>

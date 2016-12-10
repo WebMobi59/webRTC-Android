@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/EntryView.iml" filepath="$PROJECT_DIR$/EntryView.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/webRTC-Android.iml" filepath="$PROJECT_DIR$/webRTC-Android.iml" />
     </modules>
   </component>
 </project>

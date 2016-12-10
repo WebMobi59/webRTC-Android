@@ -5,4 +5,9 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name = "colorWhite">#ffffff</color>
+    <color name = "progress_bg">#000000</color>
+
+    <color name="color_preloader_start">#000000</color>
+    <color name="color_preloader_center">#000000</color>
+    <color name="color_preloader_end">#ff56a9c7</color>
 </resources>
