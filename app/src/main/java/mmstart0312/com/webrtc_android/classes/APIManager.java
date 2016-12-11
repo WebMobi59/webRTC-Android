@@ -3,6 +3,7 @@ package mmstart0312.com.webrtc_android.classes;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.text.Editable;
 
 import org.json.JSONArray;
@@ -35,12 +36,16 @@ public class APIManager {
 
     private Context context;
 
-    private static final int KEY_REQUEST_REGISTER = 383;
-    private static final int KEY_REQUEST_CONFIRM = 384;
+    private static final int KEY_REQUEST_REGISTER = 381;
+    private static final int KEY_REQUEST_CONFIRM = 382;
+    private static final int Key_Register_DeviceToken_WithTenant = 383;
+    private static final int Key_Register_DeviceToken_WithPrequalTeanat = 384;
 
     private static final String URL_BASE = "http://ec2-52-24-49-20.us-west-2.compute.amazonaws.com:2017/";
     private static final String URL_LOGIN_PHONE = "tenant-authorization"; // type:POST login with phone number
     private static final String URL_ConfirmCode = "tenant-authorization/"; // type: PUT confirm mobile number with activation code
+    private static final String URL_Register_DeviceToken_WithTenant = "tenants/"; //type: PUT register the device token if user is in tenant
+    private static final String URL_Register_DeviceToekn_WithPrequalTenant = "prequal-tenants/"; //type: PUT register the device token if user is not in tenant
     private static final String URL_LOCATION = "location/";             // type:GET
     private static final String URL_DEFAULT_ITEMS = "defaultMasksOrEffects/";                   // type:GET
 
@@ -65,6 +70,89 @@ public class APIManager {
     }
 
     public void confirmCode(String phone, String activationCode, final APISuccessListener listener) {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("activationCode", activationCode);
+            String url = URL_BASE + URL_ConfirmCode + phone;
+            this.putRequestAPICall(jsonObject, url, KEY_REQUEST_CONFIRM, listener);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void registerDeviceToken(String phone, String deviceToken, boolean flag, final APISuccessListener listener) {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("deviceToken", deviceToken);
+            String url = URL_BASE;
+            if (flag) {
+                url += URL_Register_DeviceToken_WithTenant;
+            } else {
+                url += URL_Register_DeviceToekn_WithPrequalTenant;
+            }
+
+            url += phone;
+
+            if (flag) {
+                this.putRequestAPICall(jsonObject, url, Key_Register_DeviceToken_WithTenant, listener);
+            } else {
+                this.putRequestAPICall(jsonObject, url, Key_Register_DeviceToken_WithPrequalTeanat, listener);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void putRequestAPICall(JSONObject params, String url, final int key, final APISuccessListener listener) {
+        MediaType JSON = MediaType.parse("application/json");
+        RequestBody body = RequestBody.create(JSON, params.toString());
+        Request request = new Request.Builder()
+                .url(url)
+                .put(body)
+                .addHeader("content-type", "application/json")
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                listener.onFailure(e.getLocalizedMessage());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                switch (key) {
+                    case KEY_REQUEST_CONFIRM:
+                    {
+                        try {
+                            listener.onSuccess(response);
+                        } catch (Exception e){
+                            e.printStackTrace();
+                            listener.onFailure(e.getLocalizedMessage());
+                        }
+                    }
+                    case Key_Register_DeviceToken_WithTenant:
+                    {
+                        try {
+                            listener.onSuccess(response);
+                        } catch (Exception e){
+                            e.printStackTrace();
+                            listener.onFailure(e.getLocalizedMessage());
+                        }
+                    }
+                    case Key_Register_DeviceToken_WithPrequalTeanat:
+                    {
+                        try {
+                            listener.onSuccess(response);
+                        } catch (Exception e){
+                            e.printStackTrace();
+                            listener.onFailure(e.getLocalizedMessage());
+                        }
+                    }
+                    default:
+                        break;
+                }
+            }
+        });
     }
 
     public void requestParam(JSONObject params, String url, final int key, final APISuccessListener listener){
@@ -95,7 +183,7 @@ public class APIManager {
                                 listener.onFailure("API is not working properly.");
                             }
                         }
-
+                        default:
                         break;
                     }
                 }
