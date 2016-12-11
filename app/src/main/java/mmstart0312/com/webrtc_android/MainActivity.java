@@ -8,15 +8,15 @@ import android.util.Log;
 
 public class MainActivity extends AppCompatActivity {
 
-    private SharedPreferences devicetoken;
+    private SharedPreferences AppInfo;
     private String deviceToken_string;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        devicetoken = getApplication().getSharedPreferences("AppInfo", MODE_PRIVATE);
-        deviceToken_string = devicetoken.getString("deviceToken","");
+        AppInfo = getApplication().getSharedPreferences("AppInfo", MODE_PRIVATE);
+        deviceToken_string = AppInfo.getString("deviceToken","");
 
         if (deviceToken_string != "") {
             Intent intent = new Intent(getApplicationContext(), RoomActivity.class);
