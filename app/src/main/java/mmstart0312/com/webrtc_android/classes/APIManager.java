@@ -2,6 +2,7 @@ package mmstart0312.com.webrtc_android.classes;
 
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.Editable;
@@ -38,14 +39,17 @@ public class APIManager {
 
     private static final int KEY_REQUEST_REGISTER = 381;
     private static final int KEY_REQUEST_CONFIRM = 382;
-    private static final int Key_Register_DeviceToken_WithTenant = 383;
-    private static final int Key_Register_DeviceToken_WithPrequalTeanat = 384;
+    private static final int KEY_REGISTER_DEVICETOKEN_WITHTENANT = 383;
+    private static final int KEY_REGISTER_DEVICETOKEN_WITHPREQUALTENANT = 384;
+    private static final int KEY_GET_USERINFO = 385;
 
     private static final String URL_BASE = "http://ec2-52-24-49-20.us-west-2.compute.amazonaws.com:2017/";
     private static final String URL_LOGIN_PHONE = "tenant-authorization"; // type:POST login with phone number
     private static final String URL_ConfirmCode = "tenant-authorization/"; // type: PUT confirm mobile number with activation code
     private static final String URL_Register_DeviceToken_WithTenant = "tenants/"; //type: PUT register the device token if user is in tenant
     private static final String URL_Register_DeviceToekn_WithPrequalTenant = "prequal-tenants/"; //type: PUT register the device token if user is not in tenant
+    private static final String URL_Get_User_Information_WithTenant = "tenant-location?phone="; //type: GET
+    private static final String URL_Get_User_Information_WithPrequalTenant = "prequal-tenants/"; //type: GET
     private static final String URL_LOCATION = "location/";             // type:GET
     private static final String URL_DEFAULT_ITEMS = "defaultMasksOrEffects/";                   // type:GET
 
@@ -94,9 +98,9 @@ public class APIManager {
             url += phone;
 
             if (flag) {
-                this.putRequestAPICall(jsonObject, url, Key_Register_DeviceToken_WithTenant, listener);
+                this.putRequestAPICall(jsonObject, url, KEY_REGISTER_DEVICETOKEN_WITHTENANT, listener);
             } else {
-                this.putRequestAPICall(jsonObject, url, Key_Register_DeviceToken_WithPrequalTeanat, listener);
+                this.putRequestAPICall(jsonObject, url, KEY_REGISTER_DEVICETOKEN_WITHPREQUALTENANT, listener);
             }
 
         } catch (JSONException e) {
@@ -104,6 +108,14 @@ public class APIManager {
         }
     }
 
+    public void getUserInfo(String phone, boolean flag, final APISuccessListener listener){
+        String url = URL_BASE;
+        url += (flag)?URL_Get_User_Information_WithTenant:URL_Get_User_Information_WithPrequalTenant;
+        url += phone;
+        this.getRequestAPICall(url, KEY_GET_USERINFO, listener);
+    }
+
+    //PUT
     public void putRequestAPICall(JSONObject params, String url, final int key, final APISuccessListener listener) {
         MediaType JSON = MediaType.parse("application/json");
         RequestBody body = RequestBody.create(JSON, params.toString());
@@ -130,7 +142,7 @@ public class APIManager {
                             listener.onFailure(e.getLocalizedMessage());
                         }
                     }
-                    case Key_Register_DeviceToken_WithTenant:
+                    case KEY_REGISTER_DEVICETOKEN_WITHTENANT:
                     {
                         try {
                             listener.onSuccess(response);
@@ -139,7 +151,7 @@ public class APIManager {
                             listener.onFailure(e.getLocalizedMessage());
                         }
                     }
-                    case Key_Register_DeviceToken_WithPrequalTeanat:
+                    case KEY_REGISTER_DEVICETOKEN_WITHPREQUALTENANT:
                     {
                         try {
                             listener.onSuccess(response);
@@ -155,6 +167,7 @@ public class APIManager {
         });
     }
 
+    //POST
     public void requestParam(JSONObject params, String url, final int key, final APISuccessListener listener){
         try {
             MediaType JSON = MediaType.parse("application/json");
@@ -192,6 +205,25 @@ public class APIManager {
         } catch(Exception e) {
             e.printStackTrace();
         }
+    }
+
+    //GET
+    public void getRequestAPICall(String url, final int key, final APISuccessListener listener) {
+        Request request = new Request.Builder()
+                .url(url)
+                .get()
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                listener.onFailure(e.getLocalizedMessage());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                listener.onSuccess(response);
+            }
+        });
     }
 
     public void getAddress(JSONArray location, final APISuccessListener listener){
