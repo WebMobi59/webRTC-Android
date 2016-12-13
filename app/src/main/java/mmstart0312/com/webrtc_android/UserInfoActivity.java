@@ -86,10 +86,10 @@ public class UserInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
+                progressDialog = new ProgressDialog(UserInfoActivity.this);
                 progressDialog.setMessage("Uploading ...");
                 progressDialog.show();
                 setUserName();
-                finish();
             }
         });
     }
@@ -225,12 +225,14 @@ public class UserInfoActivity extends AppCompatActivity {
                     case KEY_SETUSERINFO_SUCCESSED:
                     {
                         progressDialog.dismiss();
+                        finish();
                     }
                     break;
                     case KEY_SETUSERINFO_FAILED:
                     {
                         Log.d("UserInfo.java", "Error in setUserInfoWithTenant");
                         progressDialog.dismiss();
+                        finish();
                     }
                     break;
                     default:

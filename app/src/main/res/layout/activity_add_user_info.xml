@@ -20,7 +20,7 @@
         android:id="@+id/txt_addUserInfo"
         android:textAlignment="center"
         android:textStyle="normal|bold"
-        android:textSize="22sp"
+        android:textSize="20sp"
         android:layout_marginTop="30dp" />
 
     <LinearLayout
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/label_phonenumber"
             android:text="@string/phone"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -59,8 +59,8 @@
             android:text="@string/first_name"
             android:layout_height="wrap_content"
             android:id="@+id/label_firstname"
-            android:textSize="18sp"
-            android:layout_width="120dp" />
+            android:textSize="16sp"
+            android:layout_width="100dp" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -84,10 +84,10 @@
 
         <TextView
             android:text="@string/last_name"
-            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:id="@+id/label_lastname"
-            android:textSize="18sp" />
+            android:textSize="16sp"
+            android:layout_width="100dp" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -112,8 +112,8 @@
             android:text="@string/street"
             android:layout_height="wrap_content"
             android:id="@+id/label_street"
-            android:textSize="18sp"
-            android:layout_width="120dp" />
+            android:textSize="16sp"
+            android:layout_width="100dp" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -138,8 +138,8 @@
             android:text="@string/apt"
             android:layout_height="wrap_content"
             android:id="@+id/label_apt"
-            android:textSize="18sp"
-            android:layout_width="120dp" />
+            android:textSize="16sp"
+            android:layout_width="100dp" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -164,8 +164,8 @@
             android:text="@string/city"
             android:layout_height="wrap_content"
             android:id="@+id/label_city"
-            android:textSize="18sp"
-            android:layout_width="120dp" />
+            android:textSize="16sp"
+            android:layout_width="100dp" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -190,8 +190,8 @@
             android:text="@string/state"
             android:layout_height="wrap_content"
             android:id="@+id/label_state"
-            android:textSize="18sp"
-            android:layout_width="120dp"/>
+            android:textSize="16sp"
+            android:layout_width="100dp" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -216,8 +216,8 @@
             android:text="@string/zip"
             android:layout_height="wrap_content"
             android:id="@+id/label_zipcode"
-            android:textSize="18sp"
-            android:layout_width="120dp"/>
+            android:textSize="16sp"
+            android:layout_width="100dp" />
 
         <EditText
             android:layout_width="wrap_content"
