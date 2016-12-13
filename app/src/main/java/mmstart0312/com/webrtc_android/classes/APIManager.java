@@ -43,6 +43,8 @@ public class APIManager {
     private static final int KEY_REGISTER_DEVICETOKEN_WITHPREQUALTENANT = 384;
     private static final int KEY_GET_USERINFO = 385;
     private static final int KEY_GET_USERNAME = 386;
+    private static final int KEY_SET_USERINFO = 387;
+    private static final int KEY_UPDATE_USERINFO = 388;
 
 
     private static final String URL_BASE = "http://ec2-52-24-49-20.us-west-2.compute.amazonaws.com:2017/";
@@ -54,6 +56,7 @@ public class APIManager {
     private static final String URL_Get_User_Information_WithPrequalTenant = "prequal-tenants/"; //type: GET
     private static final String URL_Get_UserName_WithTenant = "tenants/"; //type: GET
     private static final String URL_Get_UserName_WithPrequalTenant = "prequal-tenants/"; //type: GET
+    private static final String URL_Set_UserInfo_WithPrequalTenant = "prequal-tenants/"; //type: POST
     private static final String URL_Set_UserName = "tenants/"; //PUT
 
     private OkHttpClient client;
@@ -118,6 +121,33 @@ public class APIManager {
         this.getRequestAPICall(url, KEY_GET_USERINFO, listener);
     }
 
+    public void setUserInfo(Boolean isUpdated, String phone, String deviceToken, String first, String last, String street, String city, String state, String zip, String apt, final APISuccessListener listener) {
+        String url = URL_BASE;
+        if (!isUpdated)
+            url += "prequal-tenants";
+        else
+            url += URL_Set_UserInfo_WithPrequalTenant + phone;
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("first", first);
+            jsonObject.put("last", last);
+            jsonObject.put("deviceToken", deviceToken);
+            jsonObject.put("street", street);
+            jsonObject.put("city", city);
+            jsonObject.put("state", state);
+            jsonObject.put("zip", zip);
+            jsonObject.put("apt", apt);
+            if (!isUpdated) {
+                jsonObject.put("id", phone);
+                requestParam(jsonObject, url, KEY_SET_USERINFO, listener);
+            } else {
+                putRequestAPICall(jsonObject, url, KEY_UPDATE_USERINFO, listener);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void getUserName(String phone, boolean flag, final APISuccessListener listener){
         String url = URL_BASE;
         url += (flag)?URL_Get_UserName_WithTenant:URL_Get_UserName_WithPrequalTenant;
@@ -157,25 +187,8 @@ public class APIManager {
             public void onResponse(Call call, Response response) throws IOException {
                 switch (key) {
                     case KEY_REQUEST_CONFIRM:
-                    {
-                        try {
-                            listener.onSuccess(response);
-                        } catch (Exception e){
-                            e.printStackTrace();
-                            listener.onFailure(e.getLocalizedMessage());
-                        }
-                    }
-                    break;
+                    case KEY_UPDATE_USERINFO:
                     case KEY_REGISTER_DEVICETOKEN_WITHTENANT:
-                    {
-                        try {
-                            listener.onSuccess(response);
-                        } catch (Exception e){
-                            e.printStackTrace();
-                            listener.onFailure(e.getLocalizedMessage());
-                        }
-                    }
-                    break;
                     case KEY_REGISTER_DEVICETOKEN_WITHPREQUALTENANT:
                     {
                         try {
@@ -213,6 +226,7 @@ public class APIManager {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     switch (key){
+                        case KEY_SET_USERINFO:
                         case KEY_REQUEST_REGISTER:
                         {
                             try {

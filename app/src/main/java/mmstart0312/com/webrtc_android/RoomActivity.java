@@ -34,8 +34,6 @@ public class RoomActivity extends AppCompatActivity {
     private String deviceToken;
     private UserManager _user;
 
-    final Context context = this;
-
     private final static int Key_RegisterToken_WithTenant_Failed = 401;
     private final static int Key_RegisterToken_WithTenant_Successed = 402;
     private final static int Key_RegisterToken_WithPrequalTenant_Failed = 403;
