@@ -12,10 +12,10 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -33,9 +33,10 @@
 
         <activity android:name=".confirmCodeActivity" />
         <activity android:name=".RoomActivity" />
-        <activity android:name=".ConnectCallActivity"/>
+        <activity android:name=".ConnectCallActivity" />
         <activity android:name=".addUserInfoActivity" />
-        <activity android:name=".LoginActivity"/>
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".UserInfoActivity" android:theme="@style/Theme.AppCompat.Dialog"></activity>
     </application>
 
 </manifest>

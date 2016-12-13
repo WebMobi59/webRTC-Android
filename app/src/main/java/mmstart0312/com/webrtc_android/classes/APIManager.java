@@ -42,6 +42,8 @@ public class APIManager {
     private static final int KEY_REGISTER_DEVICETOKEN_WITHTENANT = 383;
     private static final int KEY_REGISTER_DEVICETOKEN_WITHPREQUALTENANT = 384;
     private static final int KEY_GET_USERINFO = 385;
+    private static final int KEY_GET_USERNAME = 386;
+
 
     private static final String URL_BASE = "http://ec2-52-24-49-20.us-west-2.compute.amazonaws.com:2017/";
     private static final String URL_LOGIN_PHONE = "tenant-authorization"; // type:POST login with phone number
@@ -50,8 +52,9 @@ public class APIManager {
     private static final String URL_Register_DeviceToekn_WithPrequalTenant = "prequal-tenants/"; //type: PUT register the device token if user is not in tenant
     private static final String URL_Get_User_Information_WithTenant = "tenant-location?phone="; //type: GET
     private static final String URL_Get_User_Information_WithPrequalTenant = "prequal-tenants/"; //type: GET
-    private static final String URL_LOCATION = "location/";             // type:GET
-    private static final String URL_DEFAULT_ITEMS = "defaultMasksOrEffects/";                   // type:GET
+    private static final String URL_Get_UserName_WithTenant = "tenants/"; //type: GET
+    private static final String URL_Get_UserName_WithPrequalTenant = "prequal-tenants/"; //type: GET
+    private static final String URL_Set_UserName = "tenants/"; //PUT
 
     private OkHttpClient client;
 
@@ -115,6 +118,26 @@ public class APIManager {
         this.getRequestAPICall(url, KEY_GET_USERINFO, listener);
     }
 
+    public void getUserName(String phone, boolean flag, final APISuccessListener listener){
+        String url = URL_BASE;
+        url += (flag)?URL_Get_UserName_WithTenant:URL_Get_UserName_WithPrequalTenant;
+        url += phone;
+        this.getRequestAPICall(url, KEY_GET_USERNAME, listener);
+    }
+
+    public void setUserName(String phone, String first, String last, final APISuccessListener listener) {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", phone);
+            jsonObject.put("first", first);
+            jsonObject.put("last", last);
+            String url = URL_BASE + URL_Set_UserName + phone;
+            this.putRequestAPICall(jsonObject, url, KEY_REQUEST_CONFIRM, listener);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     //PUT
     public void putRequestAPICall(JSONObject params, String url, final int key, final APISuccessListener listener) {
         MediaType JSON = MediaType.parse("application/json");
@@ -142,6 +165,7 @@ public class APIManager {
                             listener.onFailure(e.getLocalizedMessage());
                         }
                     }
+                    break;
                     case KEY_REGISTER_DEVICETOKEN_WITHTENANT:
                     {
                         try {
@@ -151,6 +175,7 @@ public class APIManager {
                             listener.onFailure(e.getLocalizedMessage());
                         }
                     }
+                    break;
                     case KEY_REGISTER_DEVICETOKEN_WITHPREQUALTENANT:
                     {
                         try {
@@ -160,6 +185,7 @@ public class APIManager {
                             listener.onFailure(e.getLocalizedMessage());
                         }
                     }
+                    break;
                     default:
                         break;
                 }
@@ -224,58 +250,5 @@ public class APIManager {
                 listener.onSuccess(response);
             }
         });
-    }
-
-    public void getAddress(JSONArray location, final APISuccessListener listener){
-        try {
-            int lat = location.getInt(0);
-            int lng = location.getInt(1);
-            String url = URL_BASE+URL_LOCATION+lat+","+lng;
-            Request request = new Request.Builder()
-                    .url(url)
-                    .get()
-                    .build();
-            client.newCall(request).enqueue(new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    listener.onFailure(e.getLocalizedMessage());
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    listener.onSuccess(response);
-                }
-            });
-
-        }catch (JSONException e){
-            e.printStackTrace();
-        }
-    }
-
-    public void getDefaultItems(String type, final APISuccessListener listener){
-        String url = URL_BASE+URL_DEFAULT_ITEMS+type;
-        Request request = new Request.Builder()
-                .url(url)
-                .get()
-                .build();
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                listener.onFailure(e.getLocalizedMessage());
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                listener.onSuccess(response);
-            }
-        });
-    }
-
-     public void setContext(Context c){
-        this.context = c;
-    }
-
-     public Context getContext(){
-        return this.context;
     }
 }

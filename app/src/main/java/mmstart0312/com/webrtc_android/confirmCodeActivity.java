@@ -83,8 +83,6 @@ public class confirmCodeActivity extends AppCompatActivity {
                         }
                     }
                 });
-                Intent intent = new Intent(getApplicationContext(),RoomActivity.class);
-                startActivity(intent);
             }
         });
     }
@@ -132,6 +130,7 @@ public class confirmCodeActivity extends AppCompatActivity {
                                 });
                         builder.show();
                     }
+                    break;
                     case  Key_Confirm_Rejected:
                     {
                         AlertDialog.Builder builder = new AlertDialog.Builder(
@@ -147,6 +146,7 @@ public class confirmCodeActivity extends AppCompatActivity {
                                 });
                         builder.show();
                     }
+                    break;
                     default:
                         break;
                 }

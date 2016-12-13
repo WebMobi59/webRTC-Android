@@ -69,7 +69,8 @@
             android:ems="10"
             android:id="@+id/edit_firstname"
             android:layout_weight="1"
-            android:background="@drawable/rounded_textfield" />
+            android:background="@drawable/rounded_textfield"
+            android:textColor="?attr/colorPrimaryDark" />
 
     </LinearLayout>
 
@@ -94,7 +95,8 @@
             android:ems="10"
             android:id="@+id/edit_lastname"
             android:layout_weight="1"
-            android:background="@drawable/rounded_textfield" />
+            android:background="@drawable/rounded_textfield"
+            android:textColor="?attr/colorPrimaryDark" />
     </LinearLayout>
 
     <LinearLayout
@@ -118,7 +120,8 @@
             android:ems="10"
             android:id="@+id/edit_street"
             android:layout_weight="1"
-            android:background="@drawable/rounded_textfield" />
+            android:background="@drawable/rounded_textfield"
+            android:textColor="?attr/colorPrimaryDark" />
     </LinearLayout>
 
     <LinearLayout
@@ -142,7 +145,8 @@
             android:ems="10"
             android:id="@+id/edit_apt"
             android:layout_weight="1"
-            android:background="@drawable/rounded_textfield"/>
+            android:background="@drawable/rounded_textfield"
+            android:textColor="?attr/colorPrimaryDark" />
     </LinearLayout>
 
     <LinearLayout
@@ -166,7 +170,8 @@
             android:ems="10"
             android:id="@+id/edit_city"
             android:layout_weight="1"
-            android:background="@drawable/rounded_textfield" />
+            android:background="@drawable/rounded_textfield"
+            android:textColor="?attr/colorPrimaryDark" />
     </LinearLayout>
 
     <LinearLayout
@@ -190,7 +195,8 @@
             android:ems="10"
             android:id="@+id/edit_state"
             android:layout_weight="1"
-            android:background="@drawable/rounded_textfield"/>
+            android:background="@drawable/rounded_textfield"
+            android:textColor="?attr/colorPrimaryDark" />
     </LinearLayout>
 
     <LinearLayout
@@ -214,7 +220,8 @@
             android:ems="10"
             android:id="@+id/edit_zipcode"
             android:layout_weight="1"
-            android:background="@drawable/rounded_textfield"/>
+            android:background="@drawable/rounded_textfield"
+            android:textColor="?attr/colorPrimaryDark" />
     </LinearLayout>
 
     <LinearLayout

@@ -37,7 +37,8 @@
             android:maxLines="1"
             android:gravity="center_vertical"
             android:textStyle="normal|bold"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textColor="@android:color/black" />
 
         <ImageButton
             android:layout_width="wrap_content"

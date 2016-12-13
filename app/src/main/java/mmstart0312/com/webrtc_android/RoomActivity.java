@@ -1,6 +1,5 @@
 package mmstart0312.com.webrtc_android;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -8,10 +7,8 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -67,14 +64,8 @@ public class RoomActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-
-                Dialog mDialog = new Dialog(context);
-                mDialog.setTitle("Title");
-                mDialog.setContentView(R.layout.userinfo_layout);
-                mDialog.setCancelable(true);
-                mDialog.show();
-                Window window = mDialog.getWindow();
-                window.setLayout(LinearLayoutCompat.LayoutParams.MATCH_PARENT, LinearLayoutCompat.LayoutParams.WRAP_CONTENT);
+                Intent intent = new Intent(getApplicationContext(),UserInfoActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -221,6 +212,7 @@ public class RoomActivity extends AppCompatActivity {
                     case Key_GetUserInfo_WithPrequalTenant_Failed:
                     {
                         Log.d("RoomActivity.java", "Error in getUserInfoWithPrequalTenant");
+                        progressDialog.dismiss();
                     }
                     break;
                     default:
@@ -230,7 +222,7 @@ public class RoomActivity extends AppCompatActivity {
         });
     }
 
-    private void getUserInfo(boolean isTenant) {
+    private void getUserInfo(final boolean isTenant) {
 //        progressDialog = new ProgressDialog(RoomActivity.this);
         progressDialog.setMessage("Loading User Information...");
         progressDialog.show();
@@ -249,16 +241,28 @@ public class RoomActivity extends AppCompatActivity {
                         if (jsonObject.has("apartments")) {
                             String resultString = jsonObject.getString("apartments");
                             if (parseUserInfoJsonData(resultString)) {
-                                implementThread(Key_GetUserInfo_WithTenant_Successed);
+                                if (isTenant)
+                                    implementThread(Key_GetUserInfo_WithTenant_Successed);
+                                else
+                                    implementThread(Key_GetUserInfo_WithPrequalTenant_Successed);
                             } else {
-                                implementThread(Key_GetUserInfo_WithTenant_Failed);
+                                if (isTenant)
+                                    implementThread(Key_GetUserInfo_WithTenant_Failed);
+                                else
+                                    implementThread(Key_GetUserInfo_WithPrequalTenant_Failed);
                             }
                         } else {
-                            implementThread(Key_GetUserInfo_WithTenant_Failed);
+                            if (isTenant)
+                                implementThread(Key_GetUserInfo_WithTenant_Failed);
+                            else
+                                implementThread(Key_GetUserInfo_WithPrequalTenant_Failed);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        implementThread(Key_GetUserInfo_WithTenant_Failed);
+                        if (isTenant)
+                            implementThread(Key_GetUserInfo_WithTenant_Failed);
+                        else
+                            implementThread(Key_GetUserInfo_WithPrequalTenant_Failed);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
