@@ -16,4 +16,5 @@
     <string name="confirm">Confirm</string>
     <string name="confirm_label_string">You should receive a confirmation code \n Please enter the code and click to confirm</string>
     <string name="addUserInfo_label_string">We did not find any\n apartment assoicated\n with this phone number.\n Please enter your details,\n we will notify you once we can\n associate your number\n with the provided address</string>
+    <string name="roomURL">http://ec2-52-24-49-20.us-west-2.compute.amazonaws.com:2016</string>
 </resources>
