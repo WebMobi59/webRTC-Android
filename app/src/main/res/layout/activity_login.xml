@@ -30,7 +30,7 @@
         android:id="@+id/edit_phone"
         android:background="@drawable/rounded_textfield"
         android:textSize="@dimen/textsize_18"
-        android:inputType="text"
+        android:inputType="text|phone"
         android:layout_height="wrap_content"
         android:layout_weight="0.04"
         android:textColor="?attr/colorPrimaryDark" />

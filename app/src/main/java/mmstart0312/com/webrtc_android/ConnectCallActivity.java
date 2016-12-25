@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -25,7 +27,6 @@ import org.webrtc.PercentFrameLayout;
 import org.webrtc.RendererCommon;
 import org.webrtc.SdpObserver;
 import org.webrtc.SessionDescription;
-import org.webrtc.SurfaceViewRenderer;
 import org.webrtc.VideoRenderer;
 import org.webrtc.VideoTrack;
 
@@ -33,9 +34,10 @@ import java.util.LinkedList;
 
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
+import mmstart0312.com.webrtc_android.classes.CircularSurfaceViewRenderer;
 import mmstart0312.com.webrtc_android.classes.SocketIOManager;
 
-public class ConnectCallActivity extends AppCompatActivity implements Emitter.Listener, PeerConnection.Observer {
+public class ConnectCallActivity extends AppCompatActivity implements Emitter.Listener, PeerConnection.Observer{
 
     private Context context;
     private PeerConnectionFactory peerConnectionFactory;
@@ -64,8 +66,10 @@ public class ConnectCallActivity extends AppCompatActivity implements Emitter.Li
     private GLSurfaceView remoteUserView;
 
     private org.webrtc.PercentFrameLayout remoteRenderLayout;
-    private SurfaceViewRenderer remoteRender;
+    private CircularSurfaceViewRenderer remoteRender;
     private EglBase rootEglBase;
+    private LinearLayout buttonLayout;
+    float btnLayoutHeight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,12 +88,28 @@ public class ConnectCallActivity extends AppCompatActivity implements Emitter.Li
         dropBtn = (ImageButton) findViewById(R.id.drop_call_btn);
         muteBtn = (ImageButton) findViewById(R.id.mute_call_btn);
 
+        buttonLayout = (LinearLayout) findViewById(R.id.buttonLayout);
+
+        ViewTreeObserver vto = buttonLayout.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                ConnectCallActivity.this.buttonLayout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                int width  = ConnectCallActivity.this.buttonLayout.getMeasuredWidth();
+                int height = ConnectCallActivity.this.buttonLayout.getMeasuredHeight();
+                remoteRender.drawCircleCenter(height);
+            }
+        });
+
+
         remoteRenderLayout = (PercentFrameLayout) findViewById(R.id.remote_video_layout);
-        remoteRender = (SurfaceViewRenderer) findViewById(R.id.remote_video_view);
+        remoteRender = (CircularSurfaceViewRenderer) findViewById(R.id.remote_video_view);
 
         rootEglBase = EglBase.create();
         remoteRender.init(rootEglBase.getEglBaseContext(), null);
         remoteVideoTrack = null;
+
+
 
         initWebRTC();
 
