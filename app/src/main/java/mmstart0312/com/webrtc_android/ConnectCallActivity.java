@@ -2,11 +2,11 @@ package mmstart0312.com.webrtc_android;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
-import android.provider.ContactsContract;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -15,26 +15,27 @@ import org.json.JSONObject;
 import org.webrtc.AudioSource;
 import org.webrtc.AudioTrack;
 import org.webrtc.DataChannel;
+import org.webrtc.EglBase;
 import org.webrtc.IceCandidate;
 import org.webrtc.MediaConstraints;
 import org.webrtc.MediaStream;
 import org.webrtc.PeerConnection;
 import org.webrtc.PeerConnectionFactory;
+import org.webrtc.PercentFrameLayout;
+import org.webrtc.RendererCommon;
 import org.webrtc.SdpObserver;
 import org.webrtc.SessionDescription;
+import org.webrtc.SurfaceViewRenderer;
 import org.webrtc.VideoRenderer;
-import org.webrtc.VideoRendererGui;
 import org.webrtc.VideoTrack;
 
-import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Map;
 
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 import mmstart0312.com.webrtc_android.classes.SocketIOManager;
 
-public class ConnectCallActivity extends AppCompatActivity implements Emitter.Listener, PeerConnection.Observer{
+public class ConnectCallActivity extends AppCompatActivity implements Emitter.Listener, PeerConnection.Observer {
 
     private Context context;
     private PeerConnectionFactory peerConnectionFactory;
@@ -62,7 +63,9 @@ public class ConnectCallActivity extends AppCompatActivity implements Emitter.Li
     private ImageButton muteBtn;
     private GLSurfaceView remoteUserView;
 
-    private VideoRenderer.Callbacks remoteRender;
+    private org.webrtc.PercentFrameLayout remoteRenderLayout;
+    private SurfaceViewRenderer remoteRender;
+    private EglBase rootEglBase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,29 +73,27 @@ public class ConnectCallActivity extends AppCompatActivity implements Emitter.Li
         setContentView(R.layout.activity_connect_call);
 
         this.context = this;
-//        initWebRTC();
+
+        getWindow().addFlags(
+                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+                        | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+                        | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+                        | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
 
         openBtn = (TextView) findViewById(R.id.open_call_btn);
         dropBtn = (ImageButton) findViewById(R.id.drop_call_btn);
         muteBtn = (ImageButton) findViewById(R.id.mute_call_btn);
 
-        remoteUserView = (GLSurfaceView) findViewById(R.id.remote_video_view);
+        remoteRenderLayout = (PercentFrameLayout) findViewById(R.id.remote_video_layout);
+        remoteRender = (SurfaceViewRenderer) findViewById(R.id.remote_video_view);
+
+        rootEglBase = EglBase.create();
+        remoteRender.init(rootEglBase.getEglBaseContext(), null);
+        remoteVideoTrack = null;
+
+        initWebRTC();
+
         socket = SocketIOManager.getInstance().mSocket;
-        VideoRendererGui.setView(remoteUserView, new Runnable() {
-            @Override
-            public void run() {
-                initWebRTC();
-            }
-        });
-
-        remoteRender = VideoRendererGui.create(remoteUserView.getScrollX(),
-                remoteUserView.getScrollY(),
-                remoteUserView.getWidth(),
-                remoteUserView.getHeight(),
-                VideoRendererGui.ScalingType.SCALE_ASPECT_FILL,
-                false
-        );
-
         openBtn.setOnClickListener(new View.OnClickListener(){
 
             @Override
@@ -100,11 +101,13 @@ public class ConnectCallActivity extends AppCompatActivity implements Emitter.Li
                 sigConnect(getResources().getString(R.string.roomURL));
             }
         });
+
+        updateVideoView();
     }
 
     private void initWebRTC() {
-        PeerConnectionFactory.initializeAndroidGlobals(context, true, true, false, VideoRendererGui.getEGLContext());
-        peerConnectionFactory = new PeerConnectionFactory();
+        PeerConnectionFactory.initializeAndroidGlobals(this, true, true, true);
+        peerConnectionFactory = new PeerConnectionFactory(null);
         pcConstraints = new MediaConstraints();
         videoConstraints = new MediaConstraints();
         audioConstraints = new MediaConstraints();
@@ -113,10 +116,18 @@ public class ConnectCallActivity extends AppCompatActivity implements Emitter.Li
         final MediaConstraints.KeyValuePair videoPair = new MediaConstraints.KeyValuePair("OfferToReceiveVideo", "true");
         mediaConstraints.mandatory.add(audioPair);
         mediaConstraints.mandatory.add(videoPair);
+        mediaConstraints.optional.add(new MediaConstraints.KeyValuePair("DtlsSrtpKeyAgreement", "true"));
         AudioSource mAudioSource = peerConnectionFactory.createAudioSource(audioConstraints);
         localAudioTrack = peerConnectionFactory.createAudioTrack(AUDIO_TRACK_ID, mAudioSource);
         mediaStream = peerConnectionFactory.createLocalMediaStream(LOCAL_MEDIA_STREAM_ID);
         mediaStream.addTrack(localAudioTrack);
+    }
+
+    private void updateVideoView() {
+        remoteRenderLayout.setPosition(0, 0, 100, 100);
+        remoteRender.setScalingType(RendererCommon.ScalingType.SCALE_ASPECT_FILL);
+        remoteRender.setMirror(false);
+        remoteRender.requestLayout();
     }
 
     private void connect() {
@@ -324,7 +335,6 @@ public class ConnectCallActivity extends AppCompatActivity implements Emitter.Li
                 String type = "";
                 try {
                     type = data.getString("event");
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -422,6 +432,7 @@ public class ConnectCallActivity extends AppCompatActivity implements Emitter.Li
                 break;
             case CONNECTED:
                 stateString = "IceConnectionConnected";
+//                updateVideoView();
                 break;
             case COMPLETED:
                 stateString = "IcecConnectionCompleted";
@@ -440,6 +451,11 @@ public class ConnectCallActivity extends AppCompatActivity implements Emitter.Li
                 break;
         }
         Log.d("ICE Connection:    ", stateString);
+    }
+
+    @Override
+    public void onIceConnectionReceivingChange(boolean b) {
+        System.out.println(b);
     }
 
     @Override
@@ -469,7 +485,12 @@ public class ConnectCallActivity extends AppCompatActivity implements Emitter.Li
     }
 
     @Override
-    public void onAddStream(MediaStream mediaStream) {
+    public void onIceCandidatesRemoved(IceCandidate[] candidates) {
+
+    }
+
+    @Override
+    public void onAddStream(final MediaStream mediaStream) {
         if (peerConnection == null) {
             return;
         }
@@ -497,4 +518,5 @@ public class ConnectCallActivity extends AppCompatActivity implements Emitter.Li
     public void onRenegotiationNeeded() {
 
     }
+
 }

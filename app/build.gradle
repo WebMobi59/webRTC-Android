@@ -3,6 +3,12 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 23
     buildToolsVersion "25.0.1"
+
+    sourceSets.main {
+        jniLibs.srcDir 'libs'
+        jni.srcDirs = [] //disable automatic ndk-build call
+    }
+
     defaultConfig {
         applicationId "mmstart0312.com.webrtc_android"
         minSdkVersion 17
@@ -33,7 +39,8 @@ dependencies {
         // excluding org.json which is provided by Android
         exclude group: 'org.json', module: 'json'
     }
-    compile 'io.pristine:libjingle:9127@aar'
+    compile files('libs/autobanh.jar')
+    compile files('libs/libjingle_peerconnection.jar')
     testCompile 'junit:junit:4.12'
 }
 
