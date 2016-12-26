@@ -1,6 +1,7 @@
 package mmstart0312.com.webrtc_android;
 
 import android.content.Context;
+import android.content.Intent;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -118,7 +119,35 @@ public class ConnectCallActivity extends AppCompatActivity implements Emitter.Li
 
             @Override
             public void onClick(View v) {
-                sigConnect(getResources().getString(R.string.roomURL));
+                if (!peerStarted) {
+                    sigConnect(getResources().getString(R.string.roomURL));
+                }
+            }
+        });
+
+        muteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (peerStarted) {
+                    if (localAudioTrack.enabled()) {
+                        localAudioTrack.setEnabled(false);
+                        muteBtn.setImageResource(R.drawable.unmute);
+                    } else {
+                        localAudioTrack.setEnabled(true);
+                        muteBtn.setImageResource(R.drawable.mute);
+                    }
+                }
+            }
+        });
+
+        dropBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (peerStarted) {
+                    hangUp();
+                }
+                Intent intent = new Intent(getApplicationContext(),RoomActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -160,6 +189,7 @@ public class ConnectCallActivity extends AppCompatActivity implements Emitter.Li
     private void hangUp() {
         sendDisconnect();
         stop();
+        peerStarted = false;
     }
 
     private void stop() {

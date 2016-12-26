@@ -1,9 +1,5 @@
 package mmstart0312.com.webrtc_android;
 
-/**
- * Created by mmstart on 11/28/2016.
- */
-
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;

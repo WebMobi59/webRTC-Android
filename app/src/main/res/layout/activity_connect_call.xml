@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/relative_parent"
     android:orientation="vertical"
+    tools:context="mmstart0312.com.webrtc_android.ConnectCallActivity"
     android:background="@android:color/holo_orange_dark"
     android:weightSum="1">
     <RelativeLayout
@@ -17,7 +18,9 @@
         <org.webrtc.PercentFrameLayout
             android:id="@+id/remote_video_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true">
             <mmstart0312.com.webrtc_android.classes.CircularSurfaceViewRenderer
                 android:id="@+id/remote_video_view"
                 android:layout_width="match_parent"
@@ -62,8 +65,8 @@
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/mute"
             android:id="@+id/mute_call_btn"
-            android:layout_weight="1"
             android:background="@android:color/transparent"
+            android:layout_weight="1"
             android:layout_gravity="center" />
     </LinearLayout>
 

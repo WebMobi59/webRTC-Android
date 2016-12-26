@@ -1,12 +1,12 @@
 package mmstart0312.com.webrtc_android;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -33,6 +33,7 @@ public class RoomActivity extends AppCompatActivity {
     private String phone_number;
     private String deviceToken;
     private UserManager _user;
+    private SharedPreferences AppInfo;
 
     private final static int Key_RegisterToken_WithTenant_Failed = 401;
     private final static int Key_RegisterToken_WithTenant_Successed = 402;
@@ -52,7 +53,13 @@ public class RoomActivity extends AppCompatActivity {
         roomInfoBtn = (ImageButton) findViewById (R.id.btn_information);
 
         UserManager _user = (UserManager) getApplication();
+        AppInfo = getApplication().getSharedPreferences("AppInfo", MODE_PRIVATE);
+
         phone_number = _user.getUser_PhoneNumber();
+        if (phone_number == "") {
+            phone_number = AppInfo.getString("phone_number", "");
+        }
+
         deviceToken = FirebaseInstanceId.getInstance().getToken();
 
         registerDeviceToken();
@@ -180,6 +187,11 @@ public class RoomActivity extends AppCompatActivity {
                     case Key_RegisterToken_WithPrequalTenant_Successed:
                     case Key_RegisterToken_WithTenant_Successed:
                     {
+                        SharedPreferences.Editor editor = AppInfo.edit();
+                        editor.putString("deviceToken", deviceToken);
+                        editor.putString("phone_number", phone_number);
+                        editor.commit();
+
                         progressDialog.dismiss();
                         getUserInfo(true);
                     }

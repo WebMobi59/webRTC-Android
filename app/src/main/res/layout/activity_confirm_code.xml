@@ -31,7 +31,7 @@
         android:id="@+id/edit_confirm"
         android:background="@drawable/rounded_textfield"
         android:textSize="@dimen/textsize_18"
-        android:inputType="text"
+        android:inputType="text|number"
         android:layout_weight="0.04"
         android:textColor="?attr/colorPrimaryDark" />
 
