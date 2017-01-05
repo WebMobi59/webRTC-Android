@@ -1,5 +1,6 @@
 package mmstart0312.com.webrtc_android;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -9,22 +10,27 @@ import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
+import android.util.StringBuilderPrinter;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.util.Map;
+
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "MyFirebaseMsgService";
+    private static String roomID = "";
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        //Displaying data in log
-        //It is optional
-        Log.d(TAG, "From: " + remoteMessage.getFrom());
-        Log.d(TAG, "Notification Message Body: " + remoteMessage.getNotification().getBody());
 
-        //Calling method to generate notification
+        roomID = "";
+
+        if (remoteMessage.getData().get("rtcConnectionKey") != null) {
+            roomID = remoteMessage.getData().get("rtcConnectionKey");
+        }
+
         sendNotification(remoteMessage.getNotification().getBody());
     }
 
@@ -33,6 +39,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private void sendNotification(String messageBody) {
 
         Intent intent = new Intent(this, ConnectCallActivity.class);
+        intent.putExtra("roomID", roomID);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
                 PendingIntent.FLAG_ONE_SHOT);
@@ -46,7 +53,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("EntryView")
                 .setContentText(messageBody)
-                .setAutoCancel(true)
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setPriority(Notification.PRIORITY_MAX)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
 

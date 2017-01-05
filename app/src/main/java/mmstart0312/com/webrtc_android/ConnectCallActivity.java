@@ -71,11 +71,14 @@ public class ConnectCallActivity extends AppCompatActivity implements Emitter.Li
     private EglBase rootEglBase;
     private LinearLayout buttonLayout;
     float btnLayoutHeight;
+    private String roomID = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connect_call);
+
+        roomID = (getIntent().getExtras() != null)? getIntent().getExtras().getString("roomID") : "12345";
 
         this.context = this;
 
@@ -449,7 +452,7 @@ public class ConnectCallActivity extends AppCompatActivity implements Emitter.Li
         JSONObject message = new JSONObject();
         try {
             message.put("method", "createOrJoin");
-            message.put("sessionId", "1111");
+            message.put("sessionId", roomID);
         } catch (JSONException e) {
             e.printStackTrace();
         }

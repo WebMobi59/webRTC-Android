@@ -58,6 +58,7 @@ public class RoomActivity extends AppCompatActivity {
         phone_number = _user.getUser_PhoneNumber();
         if (phone_number == "") {
             phone_number = AppInfo.getString("phone_number", "");
+            _user.setUser_PhoneNumber(phone_number);
         }
 
         deviceToken = FirebaseInstanceId.getInstance().getToken();
@@ -210,7 +211,7 @@ public class RoomActivity extends AppCompatActivity {
                     case Key_GetUserInfo_WithPrequalTenant_Successed:
                     case Key_GetUserInfo_WithTenant_Successed:
                     {
-                        roomBtn.setText(_user.getUser_Apt() + _user.getUser_Street());
+                        roomBtn.setText(_user.getUser_Apt() + " " +  _user.getUser_Street());
                         progressDialog.dismiss();
                     }
                     break;

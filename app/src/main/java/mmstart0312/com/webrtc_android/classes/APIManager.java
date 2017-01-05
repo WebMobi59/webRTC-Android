@@ -2,12 +2,9 @@ package mmstart0312.com.webrtc_android.classes;
 
 
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.text.Editable;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -52,7 +49,7 @@ public class APIManager {
     private static final String URL_ConfirmCode = "tenant-authorization/"; // type: PUT confirm mobile number with activation code
     private static final String URL_Register_DeviceToken_WithTenant = "tenants/"; //type: PUT register the device token if user is in tenant
     private static final String URL_Register_DeviceToekn_WithPrequalTenant = "prequal-tenants/"; //type: PUT register the device token if user is not in tenant
-    private static final String URL_Get_User_Information_WithTenant = "tenant-location?phone="; //type: GET
+    private static final String URL_Get_User_Information_WithTenant = "tenant-locations?phone="; //type: GET
     private static final String URL_Get_User_Information_WithPrequalTenant = "prequal-tenants/"; //type: GET
     private static final String URL_Get_UserName_WithTenant = "tenants/"; //type: GET
     private static final String URL_Get_UserName_WithPrequalTenant = "prequal-tenants/"; //type: GET
@@ -73,6 +70,7 @@ public class APIManager {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("id", phone);
+            jsonObject.put("deviceType", "android");
             this.requestParam(jsonObject, URL_BASE+URL_LOGIN_PHONE, KEY_REQUEST_REGISTER, listener);
         }catch (JSONException e) {
             e.printStackTrace();

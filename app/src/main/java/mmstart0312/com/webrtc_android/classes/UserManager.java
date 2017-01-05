@@ -76,7 +76,7 @@ public class UserManager extends Application {
     }
 
     public void setUser_State (String user_state) {
-        this.street = user_state;
+        this.state = user_state;
     }
 
     public String getUser_Zip() {

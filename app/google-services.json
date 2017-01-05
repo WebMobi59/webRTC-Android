@@ -1,25 +1,29 @@
 {
   "project_info": {
-    "project_number": "163623259130",
-    "firebase_url": "https://webrtc-android-150913.firebaseio.com",
-    "project_id": "webrtc-android-150913",
-    "storage_bucket": "webrtc-android-150913.appspot.com"
+    "project_number": "51399897314",
+    "firebase_url": "https://entryview-1cdc9.firebaseio.com",
+    "project_id": "entryview-1cdc9",
+    "storage_bucket": "entryview-1cdc9.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:163623259130:android:db22d8c5d1e636eb",
+        "mobilesdk_app_id": "1:51399897314:android:db22d8c5d1e636eb",
         "android_client_info": {
           "package_name": "mmstart0312.com.webrtc_android"
         }
       },
       "oauth_client": [
         {
-          "client_id": "163623259130-uvaag6qmuejtfu8pc353s2ahq7r54gc7.apps.googleusercontent.com",
+          "client_id": "51399897314-dri8eps32grpalvu6f8fiqijruv1l458.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
-      "api_key": [{ "current_key": "" }],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeIfU0zqPOOZ_tujCSfyqHM2qFVkDkJ0M"
+        }
+      ],
       "services": {
         "analytics_service": {
           "status": 1
