@@ -1,4 +1,4 @@
-package mmstart0312.com.webrtc_android;
+package com.entryview.tenant;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -20,8 +20,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-import mmstart0312.com.webrtc_android.classes.APIManager;
-import mmstart0312.com.webrtc_android.classes.UserManager;
+import com.entryview.tenant.R;
+import com.entryview.tenant.classes.APIManager;
+import com.entryview.tenant.classes.UserManager;
 import okhttp3.Response;
 
 public class RoomActivity extends AppCompatActivity {
@@ -44,6 +45,8 @@ public class RoomActivity extends AppCompatActivity {
     private final static int Key_GetUserInfo_WithPrequalTenant_Failed = 407;
     private final static int Key_GetUserInfo_WithPrequalTenant_Successed = 408;
     private final static int Key_Network_Failed = 409;
+
+    private static boolean Key_Get_UserInfo = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +73,13 @@ public class RoomActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                Intent intent = new Intent(getApplicationContext(),UserInfoActivity.class);
-                startActivity(intent);
+                if (Key_Get_UserInfo) {
+                    Intent intent = new Intent(getApplicationContext(), UserInfoActivity.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), addUserInfoActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -212,6 +220,7 @@ public class RoomActivity extends AppCompatActivity {
                     case Key_GetUserInfo_WithTenant_Successed:
                     {
                         roomBtn.setText(_user.getUser_Apt() + " " +  _user.getUser_Street());
+                        Key_Get_UserInfo = true;
                         progressDialog.dismiss();
                     }
                     break;
@@ -223,6 +232,7 @@ public class RoomActivity extends AppCompatActivity {
                     case Key_GetUserInfo_WithPrequalTenant_Failed:
                     {
                         Log.d("RoomActivity.java", "Error in getUserInfoWithPrequalTenant");
+                        Key_Get_UserInfo = false;
                         progressDialog.dismiss();
                     }
                     break;

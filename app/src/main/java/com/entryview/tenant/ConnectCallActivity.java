@@ -1,7 +1,8 @@
-package mmstart0312.com.webrtc_android;
+package com.entryview.tenant;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -35,8 +36,9 @@ import java.util.LinkedList;
 
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
-import mmstart0312.com.webrtc_android.classes.CircularSurfaceViewRenderer;
-import mmstart0312.com.webrtc_android.classes.SocketIOManager;
+import com.entryview.tenant.R;
+import com.entryview.tenant.classes.CircularSurfaceViewRenderer;
+import com.entryview.tenant.classes.SocketIOManager;
 
 public class ConnectCallActivity extends AppCompatActivity implements Emitter.Listener, PeerConnection.Observer{
 
@@ -78,8 +80,6 @@ public class ConnectCallActivity extends AppCompatActivity implements Emitter.Li
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connect_call);
 
-        roomID = (getIntent().getExtras() != null)? getIntent().getExtras().getString("roomID") : "12345";
-
         this.context = this;
 
         getWindow().addFlags(
@@ -105,15 +105,12 @@ public class ConnectCallActivity extends AppCompatActivity implements Emitter.Li
             }
         });
 
-
         remoteRenderLayout = (PercentFrameLayout) findViewById(R.id.remote_video_layout);
         remoteRender = (CircularSurfaceViewRenderer) findViewById(R.id.remote_video_view);
 
         rootEglBase = EglBase.create();
         remoteRender.init(rootEglBase.getEglBaseContext(), null);
         remoteVideoTrack = null;
-
-
 
         initWebRTC();
 
@@ -155,6 +152,12 @@ public class ConnectCallActivity extends AppCompatActivity implements Emitter.Li
         });
 
         updateVideoView();
+
+        if (getIntent().getExtras() != null) {
+            roomID = getIntent().getExtras().getString("roomID");
+            sigConnect(getResources().getString(R.string.roomURL));
+        } else
+            roomID = "1111";
     }
 
     private void initWebRTC() {
@@ -173,6 +176,8 @@ public class ConnectCallActivity extends AppCompatActivity implements Emitter.Li
         localAudioTrack = peerConnectionFactory.createAudioTrack(AUDIO_TRACK_ID, mAudioSource);
         mediaStream = peerConnectionFactory.createLocalMediaStream(LOCAL_MEDIA_STREAM_ID);
         mediaStream.addTrack(localAudioTrack);
+        AudioManager audioManager = ((AudioManager) context.getSystemService(Context.AUDIO_SERVICE));
+        audioManager.setSpeakerphoneOn(true);
     }
 
     private void updateVideoView() {
@@ -485,7 +490,6 @@ public class ConnectCallActivity extends AppCompatActivity implements Emitter.Li
                 break;
             case CONNECTED:
                 stateString = "IceConnectionConnected";
-//                updateVideoView();
                 break;
             case COMPLETED:
                 stateString = "IcecConnectionCompleted";
@@ -571,5 +575,4 @@ public class ConnectCallActivity extends AppCompatActivity implements Emitter.Li
     public void onRenegotiationNeeded() {
 
     }
-
 }

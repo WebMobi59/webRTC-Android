@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/relative_parent"
     android:orientation="vertical"
-    tools:context="mmstart0312.com.webrtc_android.ConnectCallActivity"
+    tools:context="com.entryview.tenant.ConnectCallActivity"
     android:background="@android:color/holo_orange_dark"
     android:weightSum="1">
     <RelativeLayout
@@ -21,7 +21,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true">
-            <mmstart0312.com.webrtc_android.classes.CircularSurfaceViewRenderer
+            <com.entryview.tenant.classes.CircularSurfaceViewRenderer
                 android:id="@+id/remote_video_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>

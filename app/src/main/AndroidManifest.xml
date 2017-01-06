@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="mmstart0312.com.webrtc_android">
+    package="com.entryview.tenant">
 
     <uses-feature android:name="android.hardware.camera2"/>
     <uses-feature android:glEsVersion="0x00020000" android:required="true"/>
@@ -15,9 +15,10 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
-        android:name=".classes.UserManager"
+        android:name="com.entryview.tenant.classes.UserManager"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -37,32 +38,31 @@
             android:resource="@color/colorAccent" />
         <!-- [END fcm_default_icon] -->
 
-        <activity android:name=".MainActivity">
+        <activity android:name="com.entryview.tenant.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <service android:name=".MyFirebaseMessagingService">
+        <service android:name="com.entryview.tenant.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
-        <service android:name=".FirebaseIDService">
+        <service android:name="com.entryview.tenant.FirebaseIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
-        <activity android:name=".confirmCodeActivity" />
-        <activity android:name=".RoomActivity" />
-        <activity android:name=".ConnectCallActivity" />
-        <activity android:name=".addUserInfoActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".UserInfoActivity" android:theme="@style/Theme.AppCompat.Dialog"></activity>
+        <activity android:name="com.entryview.tenant.confirmCodeActivity" />
+        <activity android:name="com.entryview.tenant.RoomActivity" />
+        <activity android:name="com.entryview.tenant.ConnectCallActivity" />
+        <activity android:name="com.entryview.tenant.addUserInfoActivity" />
+        <activity android:name="com.entryview.tenant.LoginActivity" />
+        <activity android:name="com.entryview.tenant.UserInfoActivity" android:theme="@style/Theme.AppCompat.Dialog"></activity>
     </application>
 
 </manifest>

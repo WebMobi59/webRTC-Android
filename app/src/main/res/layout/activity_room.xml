@@ -5,7 +5,7 @@
     android:id="@+id/activity_room"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="mmstart0312.com.webrtc_android.RoomActivity"
+    tools:context="com.entryview.tenant.RoomActivity"
     android:background="@android:color/holo_orange_dark"
     android:gravity="center_vertical|center_horizontal"
     android:weightSum="1"

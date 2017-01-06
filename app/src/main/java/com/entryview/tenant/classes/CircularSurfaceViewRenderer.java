@@ -1,4 +1,4 @@
-package mmstart0312.com.webrtc_android.classes;
+package com.entryview.tenant.classes;
 
 import android.content.Context;
 import android.content.res.Resources;

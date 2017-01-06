@@ -10,7 +10,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "mmstart0312.com.webrtc_android"
+        applicationId "com.entryview.tenant"
         minSdkVersion 17
         targetSdkVersion 23
         versionCode 1

@@ -1,9 +1,8 @@
-package mmstart0312.com.webrtc_android;
+package com.entryview.tenant;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v4.media.session.IMediaControllerCallback;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,8 +18,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-import mmstart0312.com.webrtc_android.classes.APIManager;
-import mmstart0312.com.webrtc_android.classes.UserManager;
+import com.entryview.tenant.R;
+import com.entryview.tenant.classes.APIManager;
+import com.entryview.tenant.classes.UserManager;
 import okhttp3.Response;
 
 

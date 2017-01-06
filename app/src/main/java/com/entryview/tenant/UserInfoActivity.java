@@ -1,4 +1,4 @@
-package mmstart0312.com.webrtc_android;
+package com.entryview.tenant;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -16,8 +16,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-import mmstart0312.com.webrtc_android.classes.APIManager;
-import mmstart0312.com.webrtc_android.classes.UserManager;
+import com.entryview.tenant.R;
+import com.entryview.tenant.classes.APIManager;
+import com.entryview.tenant.classes.UserManager;
 import okhttp3.Response;
 
 public class UserInfoActivity extends AppCompatActivity {
@@ -215,7 +216,7 @@ public class UserInfoActivity extends AppCompatActivity {
                     {
                         Log.d("UserInfoActivity.java","Error in getUserNameWithTenant");
                         getUserName(false);
-                }
+                    }
                     break;
                     case KEY_GETUSERNAME_WITHPREQUALTENANT_FAILED: {
                         Log.d("UserInfoActivity.java", "Error in getUserNameWithPrequalTenant");

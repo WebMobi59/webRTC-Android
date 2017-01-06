@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="mmstart0312.com.webrtc_android.confirmCodeActivity"
+    tools:context="com.entryview.tenant.confirmCodeActivity"
     android:background="@android:color/holo_orange_dark"
     android:gravity="center_vertical|center_horizontal"
     android:weightSum="1">
