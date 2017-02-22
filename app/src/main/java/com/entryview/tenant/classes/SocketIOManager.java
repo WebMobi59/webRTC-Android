@@ -42,5 +42,7 @@ public class SocketIOManager {
     public void sendMessage(final JSONObject message) {
         mSocket.emit("message", message);
     }
-
+    public void disconnect() {
+        socketIOManager = null;
+    }
 }

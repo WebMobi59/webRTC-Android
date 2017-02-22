@@ -16,13 +16,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getIntent().getExtras() != null) {
+            Boolean fromPush = false;
             for (String key : getIntent().getExtras().keySet()) {
                 Object value = getIntent().getExtras().get(key);
                 if (key.equalsIgnoreCase("rtcconnectionkey")) {
+                    fromPush = true;
                     Intent callIntent = new Intent(getApplicationContext(), ConnectCallActivity.class);
                     callIntent.putExtra("roomID", value.toString());
                     startActivity(callIntent);
                 }
+            }
+
+            if (!fromPush) {
+                Intent intent = new Intent(getApplicationContext(), RoomActivity.class);
+                startActivity(intent);
             }
         } else {
 

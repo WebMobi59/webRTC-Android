@@ -114,7 +114,8 @@ public class ConnectCallActivity extends AppCompatActivity implements Emitter.Li
 
         initWebRTC();
 
-        socket = SocketIOManager.getInstance().mSocket;
+        socketIOManager = SocketIOManager.getInstance();
+        socket = socketIOManager.mSocket;
         openBtn.setOnClickListener(new View.OnClickListener(){
 
             @Override
@@ -145,6 +146,7 @@ public class ConnectCallActivity extends AppCompatActivity implements Emitter.Li
             public void onClick(View v) {
                 if (peerStarted) {
                     hangUp();
+                    socketIOManager.disconnect();
                 }
                 Intent intent = new Intent(getApplicationContext(),RoomActivity.class);
                 startActivity(intent);
@@ -461,7 +463,7 @@ public class ConnectCallActivity extends AppCompatActivity implements Emitter.Li
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        SocketIOManager.getInstance().sendMessage(message);
+        socketIOManager.sendMessage(message);
     }
 
     private void sigSend(JSONObject message) {
